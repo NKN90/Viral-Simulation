@@ -16,8 +16,9 @@
 
 #pragma once
 
-constexpr int IMMUNITY = 630;
-constexpr int SICKDAYS = 140;
+const int IMMUNITY = 420;
+const int SICKDAYS = 140;
+
 
 namespace corsim
 {
@@ -42,15 +43,15 @@ class Subject
         bool infected();
         void infect();
         bool immunity();
-        void tick();
         bool immune();
+        void tick();
         double angle();
         double speed();
     private:
+        int sickDays = SICKDAYS;
         int immunityDays = 0;
-        int sickDays = 0;
         double _x = 0,_y = 0, _dx = 0, _dy = 0;
-        bool _infected = false, _immunity = false;
+        bool _infected = false, _immune = false;
         int _radius = 0;
 };
 

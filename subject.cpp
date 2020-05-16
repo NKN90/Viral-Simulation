@@ -80,10 +80,16 @@ bool Subject::infected()
 
 void Subject::infect()
 {
-    if(!_immunity){
-        this->_infected = true;
-        this->sickDays = SICKDAYS;
+    if(!immunity()){
+        _infected = true;
+        sickDays = SICKDAYS;
     }
+}
+
+bool Subject::immunity() {
+    if(immunityDays > 0)
+        return true;
+    return false;
 }
 
 double Subject::angle()
@@ -97,13 +103,14 @@ double Subject::speed()
 }
 
 void Subject::tick(){
-    if(_immunity)
+    if(immunity())
         --immunityDays;
-    if(sickDays > 0)
+    if(infected())
         --sickDays;
-    if(sickDays == 0){
-        immunityDays = IMMUNITY;
+    if(sickDays == 1){
+        --sickDays;
         _infected = false;
+        immunityDays = IMMUNITY;
     }
 }
 
