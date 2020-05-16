@@ -16,7 +16,8 @@
 
 #pragma once
 
-#include "MovementStrategy.h"
+constexpr int IMMUNITY = 630;
+constexpr int SICKDAYS = 140;
 
 namespace corsim
 {
@@ -28,7 +29,7 @@ namespace corsim
 class Subject
 {
     public:
-        Subject(int x, int y, int radius, bool infected, MovementStrategy *_movementStrategy);
+        Subject(int x, int y, int radius, bool infected);
         double x();
         double y();
         void set_x(double x);
@@ -40,14 +41,16 @@ class Subject
         void set_dy(double dy);
         bool infected();
         void infect();
+        bool immunity();
+        void tick();
+        bool immune();
         double angle();
         double speed();
-        void setStrategy(MovementStrategy *movementStrategy);
-        void doStrategy();
-        MovementStrategy *_movementStrategy;
     private:
+        int immunityDays = 0;
+        int sickDays = 0;
         double _x = 0,_y = 0, _dx = 0, _dy = 0;
-        bool _infected = false;
+        bool _infected = false, _immunity = false;
         int _radius = 0;
 };
 

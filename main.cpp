@@ -44,18 +44,15 @@ int main() {
         double x = dist_w(mt); //Randomly generate x position
         double y = dist_h(mt); //Randomly generate y position
         
-        corsim::Subject su(x,y,SUBJECT_RADIUS,false, new LockMoveStrategy);
+        corsim::Subject su(x,y,SUBJECT_RADIUS,false);
 
-
-        if(i % 3 == 0 )
-            su.setStrategy(new RegMoveStrategy);
 
         su.set_dx(dist_dx(mt));
         su.set_dy(dist_dy(mt));
 
         if(i == SUBJECT_COUNT-1)
         {
-            su.infect();
+                su.infect();
         }
 
         s.add_subject(std::move(su));

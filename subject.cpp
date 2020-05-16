@@ -20,16 +20,12 @@
 namespace corsim
 {
 
-Subject::Subject(int x, int y, int radius, bool infected, MovementStrategy *_movementStrategy) : _movementStrategy(_movementStrategy)
+Subject::Subject(int x, int y, int radius, bool infected)
 {
     this->_x = x;
     this->_y = y;
     this->_radius = radius;
     this->_infected = infected;
-}
-
-void Subject::setStrategy(MovementStrategy *movementStrategy) {
-    this->_movementStrategy = movementStrategy;
 }
 
 double Subject::x()
@@ -54,22 +50,22 @@ void Subject::set_y(double y)
 
 double Subject::dx()
 {
-    return this->_movementStrategy->dx();
+    return _dx;
 }
 
 double Subject::dy()
 {
-    return this->_movementStrategy->dy();
+    return _dy;
 }
 
 void Subject::set_dx(double dx)
 {
-    this->_movementStrategy->set_dx(dx);
+    _dx = dx;
 }
 
 void Subject::set_dy(double dy)
 {
-    this->_movementStrategy->set_dy(dy);
+    _dy = dy;
 }
 
 int Subject::radius()
@@ -84,7 +80,10 @@ bool Subject::infected()
 
 void Subject::infect()
 {
-    this->_infected = true;
+    if(!_immunity){
+        this->_infected = true;
+        this->sickDays = SICKDAYS;
+    }
 }
 
 double Subject::angle()
@@ -95,6 +94,17 @@ double Subject::angle()
 double Subject::speed()
 {
     return sqrt(_dx * _dx + _dy * _dy);
+}
+
+void Subject::tick(){
+    if(_immunity)
+        --immunityDays;
+    if(sickDays > 0)
+        --sickDays;
+    if(sickDays == 0){
+        immunityDays = IMMUNITY;
+        _infected = false;
+    }
 }
 
 }
