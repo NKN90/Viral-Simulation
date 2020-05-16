@@ -20,12 +20,16 @@
 namespace corsim
 {
 
-Subject::Subject(int x, int y, int radius, bool infected)
+Subject::Subject(int x, int y, int radius, bool infected, MovementStrategy *_movementStrategy) : _movementStrategy(_movementStrategy)
 {
     this->_x = x;
     this->_y = y;
     this->_radius = radius;
     this->_infected = infected;
+}
+
+void Subject::setStrategy(MovementStrategy *movementStrategy) {
+    this->_movementStrategy = movementStrategy;
 }
 
 double Subject::x()
@@ -50,22 +54,22 @@ void Subject::set_y(double y)
 
 double Subject::dx()
 {
-    return this->_dx;
+    return this->_movementStrategy->dx();
 }
 
 double Subject::dy()
 {
-    return this->_dy;
+    return this->_movementStrategy->dy();
 }
 
 void Subject::set_dx(double dx)
 {
-    this->_dx = dx;
+    this->_movementStrategy->set_dx(dx);
 }
 
 void Subject::set_dy(double dy)
 {
-    this->_dy = dy;
+    this->_movementStrategy->set_dy(dy);
 }
 
 int Subject::radius()

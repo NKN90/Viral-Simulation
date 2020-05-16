@@ -44,7 +44,11 @@ int main() {
         double x = dist_w(mt); //Randomly generate x position
         double y = dist_h(mt); //Randomly generate y position
         
-        corsim::Subject su(x,y,SUBJECT_RADIUS,false);
+        corsim::Subject su(x,y,SUBJECT_RADIUS,false, new LockMoveStrategy);
+
+
+        if(i % 3 == 0 )
+            su.setStrategy(new RegMoveStrategy);
 
         su.set_dx(dist_dx(mt));
         su.set_dy(dist_dy(mt));
